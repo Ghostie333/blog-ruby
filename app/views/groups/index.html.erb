@@ -1,0 +1,23 @@
+<% content_for :title, "Groups" %>
+<div class="w-full">
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Wszystkie grupy</h1>
+    <%= link_to "Utwórz grupę", new_group_path, class: "rounded-md px-3.5 py-2.5 bg-emerald-600 hover:bg-blue-500 text-white block font-medium" %>
+  </div>
+  <%# Wyświetlanie listy grup %>
+  <div id="groups" class="min-w-full divide-y divide-gray-200 flex flex-col p-5 gap-5">
+    <% if @groups.any? %>
+      <div class="space-y-3">
+        <% @groups.each do |group| %>
+          <div class="flex justify-between items-center bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-400 transition-all duration-200 p-3 gap-3">
+            <%= render group %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-8 text-center">
+        <p class="text-gray-400 text-sm italic">Nie należysz do żadnej grupy.</p>
+      </div>
+    <% end %>
+  </div>
+</div>

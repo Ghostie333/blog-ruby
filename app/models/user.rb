@@ -16,4 +16,8 @@ class User < ApplicationRecord
   has_many :chatroom_users
   has_many :chatrooms, through: :chatroom_users
   has_many :messages
+
+  # Grupy
+  has_many :owned_groups, class_name: "Group", foreign_key: "owner_id"
+  has_and_belongs_to_many :groups
 end

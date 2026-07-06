@@ -1,0 +1,9 @@
+class CreateJoinTableGroupsUsers < ActiveRecord::Migration[8.1]
+  def change
+    create_join_table :groups, :users do |t|
+      # Indeksowanie
+      t.index [ :group_id, :user_id ], unique: true
+      t.index [ :user_id, :group_id ]
+    end
+  end
+end

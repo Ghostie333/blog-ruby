@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_05_145817) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_06_121704) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -87,6 +87,21 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_145817) do
     t.index ["user_id"], name: "index_friendships_on_user_id"
   end
 
+  create_table "groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.bigint "owner_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_groups_on_owner_id"
+  end
+
+  create_table "groups_users", id: false, force: :cascade do |t|
+    t.bigint "group_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["group_id", "user_id"], name: "index_groups_users_on_group_id_and_user_id", unique: true
+    t.index ["user_id", "group_id"], name: "index_groups_users_on_user_id_and_group_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.bigint "chatroom_id", null: false
@@ -99,9 +114,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_145817) do
 
   create_table "posts", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.bigint "group_id"
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -125,7 +142,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_05_145817) do
   add_foreign_key "comments", "users"
   add_foreign_key "friendships", "users"
   add_foreign_key "friendships", "users", column: "friend_id"
+  add_foreign_key "groups", "users", column: "owner_id"
   add_foreign_key "messages", "chatrooms"
   add_foreign_key "messages", "users"
+  add_foreign_key "posts", "groups"
   add_foreign_key "posts", "users"
 end

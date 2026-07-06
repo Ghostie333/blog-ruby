@@ -1,0 +1,16 @@
+<div class="flex items-center gap-2 justify-between w-full">
+  <div class="flex items-center gap-2">
+    <div class="w-12 aspect-square rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
+      <% if group.group_picture.attached? %>
+        <%= image_tag group.group_picture, class: "w-12 aspect-square rounded-full" %>
+      <% else %>
+        <%= group.name[0].upcase %>
+      <% end %>
+    </div>
+    <span class="font-semibold text-gray-800 text-sm p-1"><%= group.name %></span>
+  </div>
+  <div>
+    <%= button_to "Wejdź", group, method: :get,
+                  class: "px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors duration-150" %>
+  </div>
+</div>
