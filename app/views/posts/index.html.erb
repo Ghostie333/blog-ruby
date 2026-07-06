@@ -1,0 +1,21 @@
+<% content_for :title, "Super Blog" %>
+<div class="w-full max-w-7xl mx-auto px-4 py-6">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="font-bold text-4xl text-gray-900 tracking-tight">Posty</h1>
+  </div>
+  <% if @posts.any? %>
+    <% # Zamykamy układ w maksymalnie 2 szerokich kolumnach na desktopie %>
+    <div id="posts" class="flex flex-col gap-4 max-w-xl mx-auto">
+      <% @posts.each do |post| %>
+        <% # break-inside-avoid sprawi, że małe kafelki idealnie podskoczą pod spód bez dziur %>
+        <div class="break-inside-avoid inline-block w-full">
+          <%= render post %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="bg-gray-50 border border-gray-100 rounded-2xl p-12 text-center">
+      <p class="text-gray-500 font-medium">Nie znaleziono żadnych postów.</p>
+    </div>
+  <% end %>
+</div>

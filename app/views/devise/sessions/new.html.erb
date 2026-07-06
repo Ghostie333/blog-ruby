@@ -1,0 +1,47 @@
+<div class="mx-auto my-12 p-8 bg-white border border-gray-100 rounded-2xl shadow-xl w-full max-w-md">
+  <div class="text-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Zaloguj się</h2>
+    <p class="text-sm text-gray-500 mt-2">Witaj z powrotem! Podaj swoje dane, aby przejść do bloga.</p>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-6" }) do |f| %>
+    
+    <%# Pole Email %>
+    <div class="space-y-2">
+      <%= f.label :email, "Adres e-mail", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.email_field :email, 
+                        autofocus: true, 
+                        autocomplete: "email", 
+                        placeholder: "twoj@email.com",
+                        class: "block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition duration-150" %>
+    </div>
+
+    <%# Pole Hasło %>
+    <div class="space-y-2">
+      <%= f.label :password, "Hasło", class: "block text-sm font-medium text-gray-700" %>
+      <%= f.password_field :password, 
+                           autocomplete: "current-password", 
+                           placeholder: "••••••••",
+                           class: "block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition duration-150" %>
+    </div>
+
+    <%# Zapamiętaj mnie %>
+    <% if devise_mapping.rememberable? %>
+      <div class="flex items-center">
+        <%= f.check_box :remember_me, class: "h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" %>
+        <%= f.label :remember_me, "Zapamiętaj mnie", class: "ml-2 block text-sm text-gray-600 cursor-pointer select-none" %>
+      </div>
+    <% end %>
+
+    <%# Przycisk Logowania %>
+    <div>
+      <%= f.submit "Zaloguj się", class: "w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition duration-150 cursor-pointer text-center" %>
+    </div>
+
+  <% end %>
+
+  <%# Dodatkowe linki Devise (Rejestracja, Zapomniane hasło) %>
+  <div class="mt-8 pt-6 border-t border-gray-100 text-center text-sm text-gray-600 space-y-2">
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

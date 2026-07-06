@@ -1,0 +1,22 @@
+<div class="fixed top-4 right-4 z-50 space-y-3 max-w-sm w-full pointer-events-none">
+  <% if notice.present? %>
+    <div class="flash-toast pointer-events-auto flex items-center gap-3 p-4 bg-white border border-gray-200 border-l-4 border-l-emerald-500 rounded-2xl shadow-md transition-all duration-300 transform translate-x-full opacity-0">
+      <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+      <p class="text-gray-800 font-medium text-sm"><%= notice %></p>
+    </div>
+  <% end %>
+  <% if alert.present? %>
+    <div class="flash-toast pointer-events-auto flex items-center gap-3 p-4 bg-white border border-gray-200 border-l-4 border-l-rose-500 rounded-2xl shadow-md transition-all duration-300 transform translate-x-full opacity-0">
+      <div class="w-7 h-7 rounded-full bg-rose-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-rose-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+        </svg>
+      </div>
+      <p class="text-gray-800 font-medium text-sm"><%= alert %></p>
+    </div>
+  <% end %>
+</div>

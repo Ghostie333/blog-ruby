@@ -1,0 +1,36 @@
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <div class="shrink-0">
+        <%= link_to posts_path, class: "flex items-center space-x-2 text-xl font-bold text-gray-900 hover:text-emerald-600 transition duration-150" do %>
+          <span class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-xl text-sm font-black tracking-wider shadow-sm">SB</span>
+          <span>Super Blog</span>
+        <% end %>
+      </div>
+      <div class="flex items-center space-x-2">
+        <% if user_signed_in? %>
+          <%= link_to user_path(current_user), class: "flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 transition duration-150 group" do %>
+            <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
+              <%= current_user.email[0].upcase %>
+            </div>
+            <span class="text-sm font-medium text-gray-600 group-hover:text-emerald-700">
+              <%= current_user.email %>
+            </span>
+          <% end %>
+          <%# KLUCZOWY PRZYCISK: Poprawna akcja dla Stimulusa %>
+          <button data-action="click->friend-list#open" class="block lg:hidden p-2 bg-gray-100 hover:bg-gray-200 rounded-xl px-3 py-1.5 text-sm font-bold">
+            👥 Znajomi
+          </button>
+          <%= link_to "Wyloguj się",
+                destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "px-4 py-2 text-sm font-medium text-gray-600 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition duration-150" %>
+        <% else %>
+          <%= link_to "Zaloguj się",
+                new_user_session_path,
+                class: "px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl shadow-sm hover:shadow transition duration-150" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>
