@@ -1,5 +1,7 @@
 class ChatroomsController < ApplicationController
   before_action :authenticate_user!
+  after_action :log_activity, only: %i[create]
+
   def index
     @chatrooms = current_user.chatrooms
   end

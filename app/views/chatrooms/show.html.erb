@@ -12,20 +12,20 @@
   <%# Formularz do wysyłania wiadomości %>
   <%= form_with(model: [@chatroom, Message.new], local: true, class: "flex flex-col gap-2", id: "chat-form") do |f| %>
     <div class="flex gap-2 w-full relative">
-      <%= f.text_field :body, placeholder: "Napisz wiadomość...", class: "flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition bg-white", autocomplete: "off", id: "message_body_input" %>
+      <%= f.text_field :body, placeholder: "#{t('chatroom.text_placeholder')}", class: "flex-1 rounded-xl border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition bg-white", autocomplete: "off", id: "message_body_input" %>
       <div class="flex items-center gap-2 shrink-0">
         <%# Ładny przycisk %>
         <label for="message_files_input" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-2 text-xs font-medium rounded-xl cursor-pointer border border-gray-200 transition-colors">
-          📎 Dodaj pliki
+          <%= t('chatroom.add_files') %>
         </label>
         <%# Ukryte oryginalne pole %>
         <%= f.file_field :attachments, multiple: true, class: "hidden", id: "message_files_input" %>
       </div>
-      <%= f.submit "Wyślij", class: "bg-emerald-600 text-white px-5 font-medium text-sm rounded-xl hover:bg-emerald-700 cursor-pointer transition-colors duration-150" %>
+      <%= f.submit "#{t('chatroom.send_button')}", class: "bg-emerald-600 text-white px-5 font-medium text-sm rounded-xl hover:bg-emerald-700 cursor-pointer transition-colors duration-150" %>
     </div>
     <%# Nowe miejsce na dynamiczną listę nazw wybranych plików %>
     <div id="file-list-preview" class="text-[11px] text-gray-500 px-2 font-medium hidden truncate max-w-full">
-      Wybrane pliki: <span id="file-names-placeholder" class="text-emerald-600"></span>
+      t('chatroom.selected_files') <span id="file-names-placeholder" class="text-emerald-600"></span>
     </div>
   <% end %>
 </div>

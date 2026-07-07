@@ -4,7 +4,7 @@
     <div class="flex items-end gap-2">
       <div class="flex-1 border border-gray-200 rounded-xl px-3 py-2 bg-gray-50 focus-within:border-emerald-400 focus-within:bg-white transition-colors">
         <%= f.rich_text_area :body,
-              placeholder: "Napisz komentarz…",
+              placeholder: "#{t('posts.write_comment')}",
               class: "block w-full min-h-[36px] max-h-[160px] overflow-y-auto bg-transparent text-sm text-gray-800 focus:outline-none resize-none" %>
       </div>
       <%= f.submit "➤",
@@ -15,7 +15,7 @@
 <%# Existing comments %>
 <% if post.comments.any? %>
   <div class="space-y-2">
-    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Komentarze</h3>
+    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1"><%= t('posts.comments') %></h3>
     <% post.comments.order(created_at: :desc).each do |comment| %>
       <% next unless comment.persisted? %>
       <div class="bg-gray-50 border border-gray-100 rounded-xl px-3 py-2 space-y-1">
@@ -27,7 +27,7 @@
             <%= link_to comment.user.email, user_path(comment.user),
                   class: "text-xs font-semibold text-blue-500 hover:text-blue-700 hover:underline transition-colors" %>
           <% else %>
-            <span class="text-xs text-gray-400 italic">Anonimowy użytkownik</span>
+            <span class="text-xs text-gray-400 italic"><%= t('posts.anonymous_user') %></span>
           <% end %>
         </div>
         <div class="text-sm text-gray-800 leading-relaxed">

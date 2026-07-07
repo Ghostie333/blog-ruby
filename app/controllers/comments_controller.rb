@@ -1,8 +1,10 @@
 class CommentsController < ApplicationController
+  after_action :log_activity, only: %i[create]
+
   def create
     @post = Post.find(params[:post_id])
     @comment = @post.comments.build(comment_params)
-    
+
     @comment.user = current_user if user_signed_in?
 
     if @comment.save
@@ -16,5 +18,10 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def set_comment
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.find(params[:id])
   end
 end

@@ -3,13 +3,13 @@
   <h1 class="font-bold text-4xl">Grupa <span class="text-emerald-500"><%= @group.name %></span></h1>
   <div class="p-2 flex justify-between items-center border rounded-2xl border-gray-200 shadow-xs">
     <div>
-      <%= link_to "Powróć do grup", groups_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+      <%= link_to "#{t('groups.back_to_groups')}", groups_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
     </div>
     <%# Panel właściela grupy / przycisk dołączenia do grupy %>
     <div>
       <% if @group.owner == current_user %>
-        <%= link_to "Edytuj grupę", edit_group_path(@group), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-200 hover:bg-gray-300 inline-block font-medium" %>
-        <%= button_to "Usuń grupę", @group, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Czy napewno chcesz usunać grupę?" } %>
+        <%= link_to "#{t('groups.edit_group')}", edit_group_path(@group), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-200 hover:bg-gray-300 inline-block font-medium" %>
+        <%= button_to "#{t('groups.delete_group')}", @group, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Czy napewno chcesz usunać grupę?" } %>
       <% elsif !current_user.nil? || !current_user.groups.contain(@group) %>
         <%= link_to "Dołącz do grupy", edit_group_path(@group), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-emerald-200 hover:bg-emerald-300 inline-block font-medium" %>
       <% end %>
@@ -22,7 +22,7 @@
         <%= render post %>
       <% end %>
     <% else %>
-      <div>Brak postów na tej grupie</div>
+      <div><%= t('groups.no_posts_in_group') %></div>
     <% end %>
   </div>
 </div>

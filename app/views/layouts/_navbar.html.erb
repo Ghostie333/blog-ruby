@@ -8,6 +8,11 @@
         <% end %>
       </div>
       <div class="flex items-center space-x-2">
+        <div class="flex gap-2 p-4 text-sm font-medium">
+          <%= link_to "🇵🇱 PL", url_for(locale: :pl), class: I18n.locale == :pl ? "text-emerald-600 font-bold" : "text-gray-500" %>
+          <span class="text-gray-300">|</span>
+          <%= link_to "🇬🇧 EN", url_for(locale: :en), class: I18n.locale == :en ? "text-emerald-600 font-bold" : "text-gray-500" %>
+        </div>
         <% if user_signed_in? %>
           <%= link_to user_path(current_user), class: "flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 transition duration-150 group" do %>
             <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
@@ -17,16 +22,16 @@
               <%= current_user.email %>
             </span>
           <% end %>
-          <%# KLUCZOWY PRZYCISK: Poprawna akcja dla Stimulusa %>
+          <%# Rozwijanie listy znajomych na telefonach %>
           <button data-action="click->friend-list#open" class="block lg:hidden p-2 bg-gray-100 hover:bg-gray-200 rounded-xl px-3 py-1.5 text-sm font-bold">
-            👥 Znajomi
+            <%= t('navbar.friends') %>
           </button>
-          <%= link_to "Wyloguj się",
+          <%= link_to "#{t('navbar.logout')}",
                 destroy_user_session_path,
                 data: { turbo_method: :delete },
                 class: "px-4 py-2 text-sm font-medium text-gray-600 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition duration-150" %>
         <% else %>
-          <%= link_to "Zaloguj się",
+          <%= link_to "#{t('navbar.login')}",
                 new_user_session_path,
                 class: "px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl shadow-sm hover:shadow transition duration-150" %>
         <% end %>

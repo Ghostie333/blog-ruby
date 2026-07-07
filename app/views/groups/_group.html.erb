@@ -10,7 +10,7 @@
     <span class="font-semibold text-gray-800 text-sm p-1"><%= group.name %></span>
   </div>
   <div>
-    <%= button_to "Wejdź", group, method: :get,
+    <%= button_to "#{t('groups.show_group')}", group, method: :get,
                   class: "px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors duration-150" %>
   </div>
 </div>

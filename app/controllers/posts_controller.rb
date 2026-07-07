@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  # before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ new create edit update destroy ]
+  after_action :log_activity, only: %i[create update destroy]
+
   # GET /posts or /posts.json
   def index
     @posts = Post.all.order(created_at: :desc)

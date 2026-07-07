@@ -1,6 +1,8 @@
 class GroupsController < ApplicationController
   before_action :set_group, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[new create edit update destroy]
+  after_action :log_activity, only: %i[create update destroy]
+
   # GET /groups or /groups.json
   def index
     @groups = Group.all

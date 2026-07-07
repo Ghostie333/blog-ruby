@@ -4,6 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # Rola użytkownika
+  enum :role, { user: "user", admin: "admin" }, default: "user"
+
   # Relacje do postów i komentarzy
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -20,4 +23,7 @@ class User < ApplicationRecord
   # Grupy
   has_many :owned_groups, class_name: "Group", foreign_key: "owner_id"
   has_and_belongs_to_many :groups
+
+  # Logi
+  has_many :activity_logs
 end

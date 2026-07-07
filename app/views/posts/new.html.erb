@@ -1,6 +1,6 @@
-<% content_for :title, "Nowy post" %>
+<% content_for :title, "#{t('posts.new_post')}" %>
 <div class="max-w-3xl mx-auto">
-  <h1 class="font-bold text-4xl">Nowy post</h1>
+  <h1 class="font-bold text-4xl"><%= t('posts.new_post') %></h1>
   <%= render "form", post: @post %>
-  <%= link_to "Back to posts", posts_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "#{t('posts.back_to_posts')}", posts_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

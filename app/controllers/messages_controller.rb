@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  after_action :log_activity, only: %i[create]
+
   def create
     @chatroom = Chatroom.find(params[:chatroom_id])
     @message = @chatroom.messages.new(message_params)

@@ -2,26 +2,26 @@
   <h1 class="text-3xl font-bold mb-8">Twoje relacje</h1>
   <%# 1. Sekcja zaproszeń oczekujących %>
   <div class="mb-10 bg-blue-50 border border-blue-100 p-6 rounded-2xl">
-    <h2 class="text-xl font-semibold text-blue-900 mb-4">Oczekujące zaproszenia (<%= @incoming_invitations.count %>)</h2>
+    <h2 class="text-xl font-semibold text-blue-900 mb-4"><%= t('friendship.incoming_invitations') %> (<%= @incoming_invitations.count %>)</h2>
     <% if @incoming_invitations.any? %>
       <div class="space-y-3">
         <% @incoming_invitations.each do |invitation| %>
           <div class="flex justify-between items-center bg-white p-4 rounded-xl shadow-sm">
             <span class="font-medium text-gray-700"><%= invitation.user.email %></span>
             <div class="flex gap-2">
-              <%= button_to "Akceptuj", friendship_path(invitation), method: :patch, class: "px-4 py-1.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700" %>
-              <%= button_to "Odrzuć", friendship_path(invitation), method: :delete, class: "px-4 py-1.5 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-300" %>
+              <%= button_to "#{t('friendship.accept_btn')}", friendship_path(invitation), method: :patch, class: "px-4 py-1.5 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700" %>
+              <%= button_to "#{t('friendship.delcine_btn')}", friendship_path(invitation), method: :delete, class: "px-4 py-1.5 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-300" %>
             </div>
           </div>
         <% end %>
       </div>
     <% else %>
-      <p class="text-blue-700 text-sm italic">Brak nowych zaproszeń.</p>
+      <p class="text-blue-700 text-sm italic"><%= t('friendship.no_new_invitations') %> </p>
     <% end %>
   </div>
   <%# 2. Sekcja aktualnych znajomych %>
   <div>
-    <h2 class="text-xl font-semibold text-gray-900 mb-4">Twoi Znajomi (<%= @friends.count %>)</h2>
+    <h2 class="text-xl font-semibold text-gray-900 mb-4"><%= t('friendship.your_friends') %> (<%= @friends.count %>)</h2>
     <% if @friends.any? %>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <% @friends.each do |friend| %>

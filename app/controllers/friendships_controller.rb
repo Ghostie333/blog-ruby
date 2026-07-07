@@ -1,5 +1,7 @@
 class FriendshipsController < ApplicationController
   before_action :authenticate_user!
+  after_action :log_activity, only: %i[create update destroy]
+
   def index
     @friends = current_user.friends
 

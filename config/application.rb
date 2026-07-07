@@ -24,6 +24,9 @@ module SimpleBlog
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.active_storage.variant_processor = :mini_magick
+    # config.active_storage.variant_processor = :mini_magick
+
+    config.i18n.available_locales = [ :pl, :en ]
+    config.i18n.default_locale = :pl
   end
 end

@@ -1,7 +1,7 @@
 <% content_for :title, "Edycja grupy" %>
 <div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Edytuj grupę</h1>
+  <h1 class="font-bold text-4xl"><%= t('groups.edit_group') %></h1>
   <%= render "form", group: @group %>
-  <%= link_to "Show this group", @group, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to groups", groups_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "#{t('groups.show_group')}", @group, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "#{t('groups.back_to_group')}", groups_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>
