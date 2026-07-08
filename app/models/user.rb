@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :trackable
 
   # Rola użytkownika
   enum :role, { user: "user", admin: "admin" }, default: "user"
@@ -26,4 +26,7 @@ class User < ApplicationRecord
 
   # Logi
   has_many :activity_logs
+
+  # Zdjęcie profilowe
+  has_one_attached :avatar
 end

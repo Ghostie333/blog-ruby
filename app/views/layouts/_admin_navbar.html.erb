@@ -1,0 +1,41 @@
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-100 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16 items-center">
+      <div class="shrink-0">
+        <%= link_to posts_path, class: "flex items-center space-x-2 text-xl font-bold text-gray-900 hover:text-emerald-600 transition duration-150" do %>
+          <span class="bg-emerald-600 text-white px-2.5 py-1.5 rounded-xl text-sm font-black tracking-wider shadow-sm">SB</span>
+          <span>Super Blog</span>
+        <% end %>
+      </div>
+      <div class="flex items-center space-x-2">
+        <%# Przycisk do panelu admina %>
+        <%= button_to "#{t('navbar.admin_dashboard')}", admin_dashboards_path, method: :get,
+          class: "sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 inline-block font-medium cursor-pointer" %>
+        <%# Zmiana języka %>
+        <div class="flex gap-2 p-4 text-sm font-medium">
+          <%= link_to "🇵🇱 PL", url_for(locale: :pl), class: I18n.locale == :pl ? "text-emerald-600 font-bold" : "text-gray-500" %>
+          <span class="text-gray-300">|</span>
+          <%= link_to "🇬🇧 EN", url_for(locale: :en), class: I18n.locale == :en ? "text-emerald-600 font-bold" : "text-gray-500" %>
+        </div>
+        <% if user_signed_in? %>
+          <%= link_to user_path(current_user), class: "flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 transition duration-150 group" do %>
+            <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
+              <%= current_user.email[0].upcase %>
+            </div>
+            <span class="text-sm font-medium text-gray-600 group-hover:text-emerald-700">
+              <%= current_user.email %>
+            </span>
+          <% end %>
+          <%= link_to "#{t('navbar.logout')}",
+                destroy_user_session_path,
+                data: { turbo_method: :delete },
+                class: "px-4 py-2 text-sm font-medium text-gray-600 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition duration-150" %>
+        <% else %>
+          <%= link_to "#{t('navbar.login')}",
+                new_user_session_path,
+                class: "px-4 py-2 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-xl shadow-sm hover:shadow transition duration-150" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

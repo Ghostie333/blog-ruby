@@ -25,7 +25,7 @@ gem "jbuilder"
 
 # MOJE GEMY
 gem "devise"
-
+gem "grover"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]

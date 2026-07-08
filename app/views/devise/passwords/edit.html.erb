@@ -9,7 +9,7 @@
       <div class="flex justify-between items-baseline">
         <%= f.label :password, t('devise.new_password'), class: "block text-sm font-medium text-gray-700" %>
         <% if @minimum_password_length %>
-          <span class="text-xs text-gray-400 italic">Min. <%= @minimum_password_length %> <%= t('devise.characters_minimum') %></span>
+          <span class="text-xs text-gray-400 italic"><%= t('devise.min_characters', count: @minimum_password_length) %></span>
         <% end %>
       </div>
       <%= f.password_field :password, autofocus: true, autocomplete: "new-password", placeholder: "••••••••", class: "block w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-white transition duration-150" %>

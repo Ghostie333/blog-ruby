@@ -1,0 +1,26 @@
+<%= turbo_frame_tag "activity_logs_widget" do %>
+  <div class="flex flex-col p-3 gap-3">
+    <h2 class="text-xl font-bold text-gray-800"><%= t('admin_dashboard.logs') %></h2>
+    <% @all_logs.each do |log| %>
+      <div class="flex items-center justify-between gap-3 p-3 border border-gray-300 rounded-lg shadow-md">
+        <% if !log.user.nil? %>
+          <div class="p-3 border border-gray-300 rounded-lg shadow-md"><%= log.user.email %></div>
+        <% end %>
+        <% if !log.action.nil? %>
+          <div class="p-3 border border-gray-300 rounded-lg shadow-md"><%= log.action %></div>
+        <% end %>
+        <% if !log.details.nil? %>
+          <div class="p-3 border border-gray-300 rounded-lg shadow-md max-h-11/12 overflow-auto"><%= log.details %></div>
+        <% end %>
+        <% if !log.ip_address.nil? %>
+          <div class="p-3 border border-gray-300 rounded-lg shadow-md"><%= log.ip_address %></div>
+          <%= button_to "#{t('admin_dashboard.ban_ip')}", admin_banned_ips_path(banned_ip:
+            { ip_address: log.ip_address, reason: "Banned by admin" }), 
+              method: :post, 
+              data: { turbo_frame: "_top", turbo_confirm: "#{t('user.sure_to_ban')}" }, 
+              class: "bg-red-500 min-w-30 text-white text-sm px-4 py-2 rounded-lg font-medium cursor-pointer" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

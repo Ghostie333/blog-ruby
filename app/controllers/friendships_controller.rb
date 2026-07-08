@@ -3,7 +3,7 @@ class FriendshipsController < ApplicationController
   after_action :log_activity, only: %i[create update destroy]
 
   def index
-    @friends = current_user.friends
+    @all_friends = current_user.friends
 
     # Zaproszenia czekające na odpowiedź przez aktualnie zalogowanego Usera
     @incoming_invitations = Friendship.where(friend_id: current_user.id, status: :pending)

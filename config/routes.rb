@@ -5,9 +5,14 @@ Rails.application.routes.draw do
   get "chatrooms/show"
   get "friendships/index"
   get "user/show"
-  devise_for :users
+
+  devise_for :users, controllers: {
+    registrations: "users/registrations"
+  }
 
   resources :posts do
+    # /posts/:post_id/print
+    resource :print, only: [ :show ], controller: :prints
     resources :comments
   end
 
@@ -23,6 +28,10 @@ Rails.application.routes.draw do
 
   # Namespace dla admina
   namespace :admin do
+    resources :dashboards, only: [ :index ]
+    resources :banned_ips, only: [ :index, :create, :destroy ]
+    resources :users, only: [ :index, :update ]
+    resources :activity_logs, only: [ :index ]
     resources :posts do
       resources :comments
     end

@@ -1,12 +1,23 @@
 <div id="<%= dom_id post %>" class="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md hover:border-emerald-400 transition-all duration-200 p-5 space-y-3">
   <!-- Author -->
-  <div class="flex items-center gap-2">
-    <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
-      <%= post.user.email[0].upcase %>
+  <div class="flex items-center justify-between gap-2">
+    <div class="flex flex-row justify-center items-center gap-2">
+      <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
+        <% if post.user.avatar.nil? %>
+          <%= post.user.email[0].upcase %>
+        <% else %>
+          <%= image_tag post.user.avatar, class: "w-8 h-8 rounded-full" %>
+        <% end %>
+      </div>
+      <span class="text-sm font-semibold text-gray-800">
+        <%= link_to post.user.email, user_path(post.user) %>
+      </span>
     </div>
-    <span class="text-sm font-semibold text-gray-800">
-      <%= link_to post.user.email, user_path(post.user) %>
-    </span>
+    <%= link_to "#{t('posts.save_as_pdf')}", post_print_path(post), 
+            target: "_blank", 
+            class: "inline-flex items-center gap-2 rounded-lg bg-gray-100 hover:bg-gray-200 px-4 py-2 text-sm font-medium text-gray-700" %>
+    <%= button_to "#{t('posts.show_post')}", post_path(post), method: :get,
+      class: "sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-200 inline-block font-medium cursor-pointer" %>
   </div>
   <!-- Title -->
   <h2 class="text-lg font-bold text-gray-900 leading-snug"><%= post.title %></h2>

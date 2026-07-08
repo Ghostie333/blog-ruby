@@ -16,7 +16,11 @@
         <% if user_signed_in? %>
           <%= link_to user_path(current_user), class: "flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-emerald-50 transition duration-150 group" do %>
             <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs">
-              <%= current_user.email[0].upcase %>
+              <% if current_user.avatar.nil? %>
+                <%= current_user.email[0].upcase %>
+              <% else %>
+                <%= image_tag current_user.avatar, class: "w-7 h-7 rounded-full" %>
+              <% end %>
             </div>
             <span class="text-sm font-medium text-gray-600 group-hover:text-emerald-700">
               <%= current_user.email %>

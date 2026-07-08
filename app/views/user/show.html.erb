@@ -7,7 +7,9 @@
       <p class="text-gray-500 mt-1 font-medium"><%= @user.email %></p>
     </div>
     <% if current_user == @user %>
-      <%= link_to "#{t('user.change_password')}", edit_user_registration_path, class: "px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-blue-800 text-white font-medium text-sm rounded-xl shadow-sm hover:shadow transition duration-150 cursor-pointer" %>
+      <div>
+        <%= link_to "#{t('user.change_password')}", edit_user_registration_path, class: "px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-blue-800 text-white font-medium text-sm rounded-xl shadow-sm hover:shadow transition duration-150 cursor-pointer" %>
+      </div>
     <% end %>
   </div>
   <h2 class="text-2xl font-bold text-gray-900 mb-4"><%= t('user.user_posts') %> (<%= @user.posts.count %>)</h2>

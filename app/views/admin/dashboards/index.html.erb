@@ -1,0 +1,26 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <h1 class="text-3xl font-extrabold mb-8"><%= t('admin_dashboard.dashboard') %></h1>
+  <div class="grid grid-cols-2 gap-6">
+    <%# Widżet banów na ip %>
+    <div class="border shadow-md rounded-lg max-h-11/12 overflow-auto text-center">
+      <%# Turbo automatycznie wyśle zapytanie pod src i wklei tu wynik %>
+      <%= turbo_frame_tag "banned_ips_widget", src: admin_banned_ips_path do %>
+        <p class="text-xl font-bold text-gray-400 mb-4 animate-pulse"><%= t('admin_dashboard.loading_banned_ip_widget') %></p>
+      <% end %>
+    </div>
+    <%# Widżet userów %>
+    <div class="border shadow-md rounded-lg max-h-11/12 overflow-auto text-center">
+      <%# Turbo automatycznie wyśle zapytanie pod src i wklei tu wynik %>
+      <%= turbo_frame_tag "users_widget", src: admin_users_path do %>
+        <p class="text-xl font-bold text-gray-400 mb-4 animate-pulse"><%= t('admin_dashboard.loading_user_widget') %></p>
+      <% end %>
+    </div>
+    <%# Widżet logów %>
+    <div class="border shadow-md rounded-lg col-span-2 max-h-200 overflow-auto text-center">
+      <%# Turbo automatycznie wyśle zapytanie pod src i wklei tu wynik %>
+      <%= turbo_frame_tag "activity_logs_widget", src: admin_activity_logs_path do %>
+        <p class="text-xl font-bold text-gray-400 mb-4 animate-pulse"><%= t('admin_dashboard.loading_activity_logs_widget') %></p>
+      <% end %>
+    </div>
+  </div>
+</div>

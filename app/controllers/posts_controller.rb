@@ -1,7 +1,8 @@
 class PostsController < ApplicationController
-  # before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_user!, only: %i[ new create edit update destroy ]
   after_action :log_activity, only: %i[create update destroy]
+  before_action :redirect_admin_to_dashboard, only: [ :index ]
 
   # GET /posts or /posts.json
   def index
@@ -59,14 +60,20 @@ class PostsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params.expect(:id))
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
+  private
     # Only allow a list of trusted parameters through.
     def post_params
       params.require(:post).permit(:title, :content)
+    end
+
+    def redirect_admin_to_dashboard
+      if user_signed_in? && current_user.admin?
+        redirect_to admin_posts_path, status: :see_other
+      end
     end
 end

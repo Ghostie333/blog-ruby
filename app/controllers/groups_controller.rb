@@ -5,7 +5,13 @@ class GroupsController < ApplicationController
 
   # GET /groups or /groups.json
   def index
-    @groups = Group.all
+    if turbo_frame_request?
+      # Zapytanie przyszło z widgetu na stronie głównej -> ładujemy TYLKO grupy użytkownika
+      @groups = current_user.groups
+    else
+      # Klasyczne wejście na stronę /groups -> ładujemy WSZYSTKIE grupy z bazy
+      @groups = Group.all
+    end
   end
 
   # GET /groups/1 or /groups/1.json

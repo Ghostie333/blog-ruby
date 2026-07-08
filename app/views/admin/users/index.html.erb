@@ -1,0 +1,11 @@
+<%= turbo_frame_tag "users_widget" do %>
+  <div class="flex flex-col p-3 gap-3">
+    <h2 class="text-xl font-bold text-gray-800"><%= t('user.users') %></h2>
+    <% @all_users.each do |user| %>
+      <div class="flex items-center justify-between gap-3 p-3 border border-gray-300 rounded-lg shadow-md">
+        <div><%= user.email %></div>
+        <%= button_to "Zablokuj", admin_user_path(user), method: :patch, data: { turbo_confirm: "Napewno zablokować?", turbo_frame: "_top" }, class: "bg-red-500 text-white text-sm px-4 py-2 rounded-lg font-medium cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
