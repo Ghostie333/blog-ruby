@@ -1,11 +1,38 @@
 <%= turbo_frame_tag "users_widget" do %>
-  <div class="flex flex-col p-3 gap-3">
-    <h2 class="text-xl font-bold text-gray-800"><%= t('user.users') %></h2>
-    <% @all_users.each do |user| %>
-      <div class="flex items-center justify-between gap-3 p-3 border border-gray-300 rounded-lg shadow-md">
-        <div><%= user.email %></div>
-        <%= button_to "Zablokuj", admin_user_path(user), method: :patch, data: { turbo_confirm: "Napewno zablokować?", turbo_frame: "_top" }, class: "bg-red-500 text-white text-sm px-4 py-2 rounded-lg font-medium cursor-pointer" %>
-      </div>
-    <% end %>
+  <div class="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+    <h2 class="text-xl font-bold text-gray-900 mb-4 tracking-tight flex items-center gap-2">
+      <span class="w-2 h-5 bg-amber-500 rounded-full"></span>
+      <%= t('user.users') %>
+    </h2>
+    <div class="flex flex-col gap-2.5">
+      <% if @all_users.any? %>
+        <% @all_users.each do |user| %>
+          <div class="flex justify-between items-center p-3 bg-gray-50/50 hover:bg-gray-50 border border-gray-100 rounded-xl transition duration-150">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-7 h-7 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold text-xs shrink-0 select-none">
+                <% if !user.avatar.attached? %>
+                  <%= user.email[0].upcase %>
+                <% else %>
+                  <%= image_tag user.avatar, class: "w-7 h-7 rounded-full object-cover" %>
+                <% end %>
+              </div>
+              <span class="text-sm font-medium text-gray-800 truncate" title="<%= user.email %>">
+                <%= user.email %>
+              </span>
+            </div>
+            <%= button_to admin_user_path(user), 
+                  method: :patch, 
+                  data: { turbo_confirm: t('admin_dashboard.block_user_confirm'), turbo_frame: "_top" }, 
+                  class: "bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-2 rounded-lg font-semibold shadow-sm transition duration-150 cursor-pointer whitespace-nowrap shrink-0" do %>
+              <%= t('admin_dashboard.block_user_btn') %>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center py-6 text-xs text-gray-400 italic bg-gray-50/50 border border-dashed border-gray-200 rounded-xl">
+          <%= t('admin_dashboard.no_users') %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>

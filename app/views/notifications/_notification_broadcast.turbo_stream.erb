@@ -1,0 +1,4 @@
+<%# Odświeżanie powiadomień na żywo %>
+<%= turbo_stream.replace "notifications-counter" do %>
+  <%= render "notifications/counter", count: notification.recipient.notifications.unread.count %>
+<% end %>

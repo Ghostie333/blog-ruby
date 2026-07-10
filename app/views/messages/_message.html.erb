@@ -1,6 +1,10 @@
 <div class="flex justify-start w-full msg-row" data-sender-id="<%= message.user_id %>">
   <div class="avatar-left w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xs mr-2 mt-1 shrink-0">
-    <%= message.user.email[0].upcase %>
+    <% if !message.user.avatar.attached? %>
+      <%= message.user.email[0].upcase %>
+    <% else %>
+      <%= image_tag message.user.avatar, class: "w-7 h-7 rounded-full" %>
+    <% end %>
   </div>
   <div class="msg-bubble max-w-xs px-4 py-2.5 rounded-2xl text-sm shadow-sm bg-white text-gray-900 border border-gray-200 rounded-bl-none">
     <p class="msg-email font-semibold text-[10px] mb-1 text-emerald-600"><%= message.user.email %></p>
@@ -23,6 +27,10 @@
     <% end %>
   </div>
   <div class="avatar-right hidden w-7 h-7 rounded-full bg-emerald-100 items-center justify-center text-emerald-700 font-bold text-xs ml-2 mt-1 shrink-0">
-    <%= message.user.email[0].upcase %>
+    <% if !message.user.avatar.attached? %>
+      <%= message.user.email[0].upcase %>
+    <% else %>
+      <%= image_tag message.user.avatar, class: "w-7 h-7 rounded-full" %>
+    <% end %>
   </div>
 </div>

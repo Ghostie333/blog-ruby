@@ -8,7 +8,7 @@
     </div>
     <% if current_user == @user %>
       <div>
-        <%= link_to "#{t('user.change_password')}", edit_user_registration_path, class: "px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-blue-800 text-white font-medium text-sm rounded-xl shadow-sm hover:shadow transition duration-150 cursor-pointer" %>
+        <%= link_to "#{t('user.edit_profile')}", edit_user_registration_path, class: "px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 active:bg-blue-800 text-white font-medium text-sm rounded-xl shadow-sm hover:shadow transition duration-150 cursor-pointer" %>
       </div>
     <% end %>
   </div>

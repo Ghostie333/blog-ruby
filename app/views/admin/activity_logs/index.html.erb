@@ -1,26 +1,66 @@
 <%= turbo_frame_tag "activity_logs_widget" do %>
-  <div class="flex flex-col p-3 gap-3">
-    <h2 class="text-xl font-bold text-gray-800"><%= t('admin_dashboard.logs') %></h2>
-    <% @all_logs.each do |log| %>
-      <div class="flex items-center justify-between gap-3 p-3 border border-gray-300 rounded-lg shadow-md">
-        <% if !log.user.nil? %>
-          <div class="p-3 border border-gray-300 rounded-lg shadow-md"><%= log.user.email %></div>
-        <% end %>
-        <% if !log.action.nil? %>
-          <div class="p-3 border border-gray-300 rounded-lg shadow-md"><%= log.action %></div>
-        <% end %>
-        <% if !log.details.nil? %>
-          <div class="p-3 border border-gray-300 rounded-lg shadow-md max-h-11/12 overflow-auto"><%= log.details %></div>
-        <% end %>
-        <% if !log.ip_address.nil? %>
-          <div class="p-3 border border-gray-300 rounded-lg shadow-md"><%= log.ip_address %></div>
-          <%= button_to "#{t('admin_dashboard.ban_ip')}", admin_banned_ips_path(banned_ip:
-            { ip_address: log.ip_address, reason: "Banned by admin" }), 
-              method: :post, 
-              data: { turbo_frame: "_top", turbo_confirm: "#{t('user.sure_to_ban')}" }, 
-              class: "bg-red-500 min-w-30 text-white text-sm px-4 py-2 rounded-lg font-medium cursor-pointer" %>
-        <% end %>
-      </div>
-    <% end %>
+  <div class="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+    <h2 class="text-xl font-bold text-gray-900 mb-4 tracking-tight flex items-center gap-2">
+      <span class="w-2 h-5 bg-emerald-600 rounded-full"></span>
+      <%= t('admin_dashboard.logs') %>
+    </h2>
+    <div class="flex flex-col gap-4">
+      <% @all_logs.each do |log| %>
+        <div class="p-4 bg-gray-50/50 hover:bg-gray-50 border border-gray-100 rounded-xl transition duration-150 flex flex-col gap-3">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+            <!-- 1. Użytkownik & Akcja -->
+            <div class="md:col-span-5 min-w-0">
+              <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">
+                <%= t('activity_logs.user_action') %>
+              </div>
+              <div class="truncate text-sm font-semibold text-gray-900" title="<%= log.user&.email %>">
+                <%= log.user ? log.user.email : t('activity_logs.guest_system') %>
+              </div>
+              <div class="text-xs text-emerald-600 font-bold mt-0.5">
+                <%# Szukamy tłumaczenia akcji, jeśli nie ma - wyświetlamy surową nazwę %>
+                <%= t("activity_logs.actions.#{log.action}", default: log.action || t('activity_logs.no_action')) %>
+              </div>
+            </div>
+            <!-- 2. Data utworzenia -->
+            <div class="md:col-span-3 whitespace-nowrap min-w-[155px]">
+              <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">
+                <%= t('activity_logs.log_date') %>
+              </div>
+              <div class="text-xs font-mono text-gray-600 bg-gray-200/60 px-2 py-1 rounded-md inline-block">
+                <%= log.created_at ? log.created_at.strftime("%Y-%m-%d %H:%M:%S") : "---" %>
+              </div>
+            </div>
+            <!-- 3. IP oraz Przycisk Banowania -->
+            <div class="md:col-span-4 flex items-center justify-between gap-3 min-w-[200px]">
+              <div class="min-w-0">
+                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-0.5">
+                  <%= t('activity_logs.ip_address') %>
+                </div>
+                <div class="text-xs font-mono text-gray-700 truncate font-medium"><%= log.ip_address || "---" %></div>
+              </div>
+              <% if log.ip_address.present? %>
+                <%= button_to admin_banned_ips_path(banned_ip: { ip_address: log.ip_address, reason: "Banned by admin" }), 
+                      method: :post, 
+                      data: { turbo_frame: "_top", turbo_confirm: "#{t('user.sure_to_ban')}" }, 
+                      class: "bg-rose-600 hover:bg-rose-700 text-white text-xs px-3 py-2 rounded-lg font-semibold shadow-sm transition duration-150 cursor-pointer whitespace-nowrap shrink-0" do %>
+                  <%= t('admin_dashboard.ban_ip') %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <!-- DOLNY PAS: Szczegóły operacji -->
+          <% if log.details.present? %>
+            <div class="w-full bg-white border border-gray-200/60 rounded-xl p-3.5 shadow-inner max-h-60 overflow-y-auto">
+              <div class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">
+                <%= t('activity_logs.operation_details') %>
+              </div>
+              <div class="text-xs text-gray-800 text-left space-y-1">
+                <%= render_activity_details(log.details) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 <% end %>

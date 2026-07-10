@@ -1,0 +1,6 @@
+<%# Łącznik między kliknięciem przycisku a listą powiadomień %>
+<%= turbo_stream.replace "notifications_widget_frame" do %>
+  <%= turbo_frame_tag "notifications_widget_frame" do %>
+    <%= render partial: "notifications/widget_list", locals: { notifications: @notifications } %>
+  <% end %>
+<% end %>

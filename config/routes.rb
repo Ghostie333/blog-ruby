@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "notifications/index"
   resources :groups
   get "messages/create"
   get "chatrooms/index"
@@ -6,9 +7,12 @@ Rails.application.routes.draw do
   get "friendships/index"
   get "user/show"
 
+
   devise_for :users, controllers: {
-    registrations: "users/registrations"
-  }
+  sessions: "users/sessions",
+  registrations: "users/registrations",
+  passwords: "users/passwords"
+}
 
   resources :posts do
     # /posts/:post_id/print
@@ -36,6 +40,10 @@ Rails.application.routes.draw do
       resources :comments
     end
   end
+
+  # Powiadomienia
+  resources :notifications, only: [ :index ]
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

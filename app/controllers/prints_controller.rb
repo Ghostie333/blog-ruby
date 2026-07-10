@@ -1,4 +1,6 @@
 class PrintsController < ApplicationController
+  after_action :log_activity, only: %i[show]
+
   def show
     @post = Post.find(params[:post_id])
     html = render_to_string(template: "prints/show", layout: false)

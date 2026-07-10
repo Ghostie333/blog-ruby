@@ -1,17 +1,36 @@
-<%# app/views/admin/banned_ips/index.html.erb %>
 <%= turbo_frame_tag "banned_ips_widget" do %>
-  <div class="p-3">
-    <h2 class="text-xl font-bold text-gray-800 mb-4"><%= t('admin_dashboard.banned_ips') %></h2>
+  <div class="p-4 bg-white rounded-2xl border border-gray-100 shadow-sm">
+    <h2 class="text-xl font-bold text-gray-900 mb-4 tracking-tight flex items-center gap-2">
+      <span class="w-2 h-5 bg-rose-600 rounded-full"></span>
+      <%= t('admin_dashboard.banned_ips') %>
+    </h2>
     <%= form_with(model: [:admin, @new_banned_ip], class: "flex gap-2 mb-6") do |f| %>
-      <%= f.text_field :ip_address, placeholder: "np. 127.0.0.1", class: "border rounded-lg px-3 py-2 text-sm w-full" %>
-      <%= f.submit "Zbanuj IP", data: { turbo_frame: "_top" }, class: "bg-red-500 text-white text-sm px-4 py-2 rounded-lg font-medium cursor-pointer" %>
+      <%= f.text_field :ip_address, 
+            placeholder: t('admin_dashboard.ip_placeholder'), 
+            class: "border border-gray-200 focus:border-rose-500 focus:ring-1 focus:ring-rose-500 rounded-xl px-3 py-2 text-sm w-full font-mono transition duration-150 focus:outline-none" %>
+      <%= f.submit t('admin_dashboard.ban_ip'), 
+            data: { turbo_frame: "_top" }, 
+            class: "bg-rose-600 hover:bg-rose-700 text-white text-sm px-4 py-2 rounded-xl font-semibold shadow-sm transition duration-150 cursor-pointer whitespace-nowrap" %>
     <% end %>
-    <%# Wyświetlanie już zbanowanych IP %>
-    <div class="divide-y divide-gray-100">
-      <% @banned_ips.each do |banned| %>
-        <div class="flex justify-between items-center p-3 border border-gray-300 rounded-lg shadow-md">
-          <span class="font-mono text-md"><%= banned.ip_address %></span>
-          <%= button_to "Odblokuj", admin_banned_ip_path(banned), method: :delete, data: { turbo_confirm: "Odblokować?", turbo_frame: "_top"}, class: "bg-red-500 text-white text-sm px-4 py-2 rounded-lg font-medium cursor-pointer" %>
+    <div class="flex flex-col gap-2.5">
+      <% if @banned_ips.any? %>
+        <% @banned_ips.each do |banned| %>
+          <div class="flex justify-between items-center p-3.5 bg-gray-50/50 hover:bg-gray-50 border border-gray-100 rounded-xl transition duration-150">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 bg-rose-500 rounded-full animate-pulse"></span>
+              <span class="font-mono text-sm font-semibold text-gray-800"><%= banned.ip_address %></span>
+            </div>
+            <%= button_to admin_banned_ip_path(banned), 
+                  method: :delete, 
+                  data: { turbo_confirm: t('admin_dashboard.unban_confirm'), turbo_frame: "_top" }, 
+                  class: "bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs px-3 py-2 rounded-lg font-bold transition duration-150 cursor-pointer" do %>
+              <%= t('admin_dashboard.unban_btn') %>
+            <% end %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="text-center py-6 text-xs text-gray-400 italic bg-gray-50/50 border border-dashed border-gray-200 rounded-xl">
+          <%= t('admin_dashboard.no_banned_ips') %>
         </div>
       <% end %>
     </div>

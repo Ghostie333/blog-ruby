@@ -29,4 +29,7 @@ class User < ApplicationRecord
 
   # Zdjęcie profilowe
   has_one_attached :avatar
+
+  # Powiadomienia
+  has_many :notifications, foreign_key: :recipient_id, dependent: :destroy
 end

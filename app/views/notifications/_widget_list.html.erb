@@ -1,0 +1,47 @@
+<%# Kod rozwijanej listy powiadomień %>
+<div class="w-80 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 text-left">
+  <div class="px-4 py-2 border-b border-gray-50 flex items-center">
+    <span class="font-bold text-sm text-gray-900">Powiadomienia</span>
+  </div>
+  <div class="max-h-96 overflow-y-auto divide-y divide-gray-50">
+    <% if notifications.any? %>
+      <% notifications.each do |notification| %>
+        <div class="px-4 py-3 hover:bg-gray-50/50 transition duration-150 flex items-start gap-3">
+          <div class="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs overflow-hidden shrink-0 mt-0.5">
+            <% if notification.actor.avatar.attached? %>
+              <%= image_tag notification.actor.avatar, class: "w-7 h-7 rounded-full object-cover" %>
+            <% else %>
+              <%= notification.actor.email[0].upcase %>
+            <% end %>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-xs text-gray-700 leading-normal">
+              <strong class="font-semibold text-gray-900"><%= notification.actor.email.split('@').first %></strong>
+              <% if notification.notifiable_type == "Message" %>
+                napisał(a) do Ciebie.
+              <% elsif notification.notifiable_type == "Friendship" %>
+                wysłał(a) zaproszenie.
+              <% end %>
+            </p>
+            <span class="text-[10px] text-gray-400 block mt-0.5"><%= time_ago_in_words(notification.created_at) %> temu</span>
+          </div>
+          <div class="shrink-0 self-center">
+            <% if notification.notifiable_type == "Message" %>
+              <%= link_to "Czat", chatroom_path(notification.notifiable.chatroom_id), 
+              data: { turbo_frame: "_top" }, 
+              class: "p-1 text-emerald-600 hover:bg-emerald-50 rounded-md block" %>
+            <% elsif notification.notifiable_type == "Friendship" %>
+              <%= link_to "Profil", user_path(notification.actor_id), 
+              data: { turbo_frame: "_top" }, 
+              class: "p-1 text-blue-600 hover:bg-blue-50 rounded-md block" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="text-center py-8 text-xs text-gray-400">
+        Brak nowych powiadomień
+      </div>
+    <% end %>
+  </div>
+</div>
