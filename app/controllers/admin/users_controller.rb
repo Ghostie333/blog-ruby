@@ -1,6 +1,11 @@
 class Admin::UsersController < Admin::BaseController
   def index
-    @all_users = User.all
+    filter = params[:query]
+    if filter.present?
+      @all_users = User.where("email ILIKE ?", "%#{filter}%")
+    else
+      @all_users = User.limit(10)
+    end
   end
 
   def update

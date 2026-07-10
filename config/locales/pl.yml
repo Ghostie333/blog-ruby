@@ -92,6 +92,7 @@ pl:
     password_confirmation_label: "Potwierdź hasło"
     sign_up_btn: "Zarejestruj się"
     sign_in_title: "Zaloguj się"
+    sign_in_btn: "Zaloguj się"
     sign_in_desc: "Witaj z powrotem! Podaj swoje dane, aby przejść do bloga."
     remember_me_label: "Zapamiętaj mnie"
     sign_in_link: "Zaloguj"
@@ -139,6 +140,7 @@ pl:
     block_user_btn: "Zablokuj"
     block_user_confirm: "Czy na pewno chcesz zablokować tego użytkownika?"
     no_users: "Brak zarejestrowanych użytkowników."
+    no_logs: "Nie znaleziono logów"
   notices:
     post_successfully_destroyed: "Pomyślnie usunięto posta"
     post_successfully_updated: "Pomyślnie zaktualizowano posta"

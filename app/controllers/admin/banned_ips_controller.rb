@@ -1,6 +1,11 @@
 class Admin::BannedIpsController < Admin::BaseController
   def index
-    @banned_ips = BannedIp.order(created_at: :desc)
+    filter = params[:query]
+    if filter.present?
+      @banned_ips = BannedIp.where("ip_address ILIKE ?", "%#{filter}%")
+    else
+      @banned_ips = BannedIp.limit(10).order(created_at: :desc)
+    end
     @new_banned_ip = BannedIp.new
   end
 
