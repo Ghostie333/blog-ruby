@@ -16,7 +16,11 @@
       <!-- Author -->
       <div class="flex items-center gap-2">
         <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
-          <%= @post.user.email[0].upcase %>
+          <% if @post.user.avatar.attached? %>
+            <img src="<%= url_for(@post.user.avatar) %>" class="w-8 h-8 rounded-full object-cover" />
+          <% else %>
+            <span class="avatar-initial"><%= @post.user.email[0].upcase %></span>
+          <% end %>
         </div>
         <span class="text-sm font-semibold text-gray-800">
           <%= @post.user.email %>
@@ -26,7 +30,7 @@
       <h2 class="text-lg font-bold text-gray-900 leading-snug"><%= @post.title %></h2>
       <!-- Content -->
       <div class="text-gray-700 text-sm trix-content leading-relaxed border-l-4 border-emerald-300 pl-3">
-        <%= @post.content %>
+        <%= @post.content.body %>
       </div>
       <!-- Date -->
       <p class="text-xs text-gray-400 font-light"><%= @post.created_at.strftime("%-d %b %Y, %H:%M") %></p>

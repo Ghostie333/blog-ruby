@@ -3,7 +3,21 @@ class Admin::PostsController < Admin::BaseController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all.order(created_at: :desc)
+    filter = params[:query]
+
+    if filter.present?
+      # Dołączamy usera ORAZ tabelę z treścią bogatą Action Text
+      @posts = Post.left_joins(:user, :rich_text_content)
+                  .where(
+                    "posts.title ILIKE :q OR
+                      users.email ILIKE :q OR
+                      action_text_rich_texts.body ILIKE :q",
+                    q: "%#{filter}%"
+                  )
+                  .order(created_at: :desc)
+    else
+      @posts = Post.limit(10).order(created_at: :desc)
+    end
   end
 
   # GET /posts/1 or /posts/1.json

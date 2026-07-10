@@ -8,8 +8,10 @@ class PrintsController < ApplicationController
     grover = Grover.new(html,
       format: "A4",
       margin: { top: "20px", bottom: "20px" },
+      print_background: true,
       display_url: "http://127.0.0.1:3000",
-      print_background: true
+      prefer_file_to_url: true,
+      launch_args: [ "--allow-file-access-from-files", "--disable-web-security" ]
     )
     pdf = grover.to_pdf
 

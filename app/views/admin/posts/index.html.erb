@@ -1,21 +1,36 @@
 <% content_for :title, "Super Blog" %>
-<div class="w-full max-w-7xl mx-auto px-4 py-6">
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="font-bold text-4xl text-gray-900 tracking-tight"><%= t('posts.posts') %></h1>
-  </div>
-  <% if @posts.any? %>
-    <% # Zamykamy układ w maksymalnie 2 szerokich kolumnach na desktopie %>
-    <div id="posts" class="flex flex-col gap-4 max-w-xl mx-auto">
-      <% @posts.each do |post| %>
-        <% # break-inside-avoid sprawi, że małe kafelki idealnie podskoczą pod spód bez dziur %>
-        <div class="break-inside-avoid inline-block w-full">
-          <%= render post %>
+<%= turbo_frame_tag "posts_page" do %>
+  <div class="w-full max-w-7xl mx-auto px-4 py-6">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="font-bold text-4xl text-gray-900 tracking-tight"><%= t('posts.posts') %></h1>
+    </div>
+    <%# Filtrowanie postów po user.email, title, body %>
+    <div id="logs_search_container" data-turbo-permanent class="bg-gray-50 p-3 rounded-xl mb-4 border border-gray-100 max-w-3xl mx-auto">
+      <%= form_with url: admin_posts_path, method: :get, data: { controller: "posts-search" } do |f| %>
+        <div class="flex items-center gap-2">
+          <%= f.label :query, "Filtr:", class: "text-xs font-semibold text-gray-500 uppercase tracking-wider" %>
+          <%= f.search_field :query, 
+                id: "posts_search_input",
+                autocomplete: "off",
+                data: { action: "input->posts-search#filterPosts" }, 
+                class: "w-full text-sm px-3 py-1.5 bg-white border border-gray-200 rounded-lg focus:outline-none focus:border-emerald-400 transition" %>
         </div>
       <% end %>
     </div>
-  <% else %>
-    <div class="bg-gray-50 border border-gray-100 rounded-2xl p-12 text-center">
-      <p class="text-gray-500 font-medium"><%= t('posts.no_posts') %></p>
-    </div>
-  <% end %>
-</div>
+    <% if @posts.any? %>
+      <% # Zamykamy układ w maksymalnie 2 szerokich kolumnach na desktopie %>
+      <div id="posts" class="flex flex-col gap-4 max-w-xl mx-auto">
+        <% @posts.each do |post| %>
+          <% # break-inside-avoid sprawi, że małe kafelki idealnie podskoczą pod spód bez dziur %>
+          <div class="break-inside-avoid inline-block w-full">
+            <%= render post %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="bg-gray-50 border border-gray-100 rounded-2xl p-12 text-center">
+        <p class="text-gray-500 font-medium"><%= t('posts.no_posts') %></p>
+      </div>
+    <% end %>
+  </div>
+<% end %>
