@@ -8,11 +8,12 @@
               class: "block w-full min-h-[36px] max-h-[160px] overflow-y-auto bg-transparent text-sm text-gray-800 focus:outline-none resize-none" %>
       </div>
       <%= f.submit "➤",
+            data: { turbo_frame: "_top" },
             class: "w-9 h-9 flex items-center justify-center bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white text-base rounded-full shadow transition-all duration-150 cursor-pointer shrink-0" %>
     </div>
   <% end %>
 </div>
-<%# Existing comments %>
+<%# Istniejące komentarze %>
 <% if post.comments.any? %>
   <div class="space-y-2">
     <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1"><%= t('posts.comments') %></h3>

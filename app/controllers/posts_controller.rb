@@ -83,7 +83,7 @@ class PostsController < ApplicationController
   private
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:title, :content)
+      params.require(:post).permit(:title, :content, :group_id)
     end
 
     def redirect_admin_to_dashboard

@@ -39,7 +39,7 @@ class Admin::PostsController < Admin::BaseController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: "Post was successfully created." }
+        format.html { redirect_to admin_post_path(@post), notice: "Post was successfully created." }
         format.json { render :show, status: :created, location: @post }
       else
         format.html { render :new, status: :unprocessable_content }
@@ -51,7 +51,7 @@ class Admin::PostsController < Admin::BaseController
   # PATCH/PUT /posts/1 or /posts/1.json
   def update
     if @post.update(post_params)
-      redirect_to @post, notice: "#{t('posts.post_successfully_updated')}"
+      redirect_to admin_post_path(@post), notice: "#{t('posts.post_successfully_updated')}"
     else
       render :edit, alert: "#{t('posts.post_fail_to_update')}"
     end

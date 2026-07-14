@@ -3,21 +3,19 @@ class Admin::CommentsController < Admin::BaseController
 
 # Poprawione create:
 def create
-  @post = Post.find(params[:post_id])
   @comment = @post.comments.build(comment_params)
   @comment.user = current_user if user_signed_in?
 
   if @comment.save
-    redirect_to [ :admin, @post ], notice: t("notices.comment_successfully_created")
+    redirect_to admin_post_path(@post), notice: t("notices.comment_successfully_created")
   else
-    redirect_to [ :admin, @post ], alert: t("alerts.comment_fail_to_create") # poprawiłem alert na alerts (w zależności jak masz w YAML)
+    redirect_to admin_post_path(@post), alert: t("alerts.comment_fail_to_create")
   end
 end
 
   def destroy
-  @comment.destroy!
-  # Zamiast redirect_back, przekieruj wprost na widok tego posta w panelu admina:
-  redirect_to [ :admin, @post ], alert: "Komentarz usunięty", status: :see_other
+    @comment.destroy!
+    redirect_to admin_post_path(@post), alert: "Komentarz usunięty", status: :see_other
   end
 
   private

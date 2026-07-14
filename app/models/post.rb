@@ -3,7 +3,7 @@ class Post < ApplicationRecord
 
   belongs_to :user
   has_many :comments, dependent: :destroy
-  belongs_to :group, optional: true, dependent: :destroy
+  belongs_to :group, optional: true
 
   validates :title, presence: true
   validates :content, presence: true
