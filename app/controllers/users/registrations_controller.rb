@@ -1,6 +1,6 @@
 # app/controllers/users/registrations_controller.rb
 class Users::RegistrationsController < Devise::RegistrationsController
-  after_action :log_activity, only: %i[create update_resource]
+  after_action :log_activity, only: %i[create edit]
 
   protected
 

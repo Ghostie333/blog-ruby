@@ -13,9 +13,22 @@
     <%= form.label "#{t('posts.title')}" %>
     <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": post.errors[:title].none?, "border-red-400 focus:outline-red-600": post.errors[:title].any?}] %>
   </div>
+  <div class="my-5 flex flex-col w-fit">
+    <%= form.label :group_id, t('posts.title'), class: "font-medium text-gray-700" %>
+    <%= form.collection_select :group_id, 
+                             @user_groups, 
+                             :id, 
+                             :name, 
+                             { prompt: "Wybierz grupę (opcjonalnie)" }, 
+                             { class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", 
+                                       post.errors[:group_id].any? ? "border-red-400 focus:outline-red-600" : "border-gray-400 focus:outline-blue-600"] } %>
+  </div>
   <div class="my-5">
-    <%= form.label "#{t('posts.content')}" %>
-    <%= form.rich_textarea :content, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": post.errors[:content].none?, "border-red-400 focus:outline-red-600": post.errors[:content].any?}] %>
+    <%= form.label t('posts.content'), class: "block font-medium text-gray-700" %>
+    <div class="block shadow-sm rounded-md border border-gray-300 mt-2 w-full bg-white min-h-[50px]">
+      <%# Zmieniono z :title na :content %>
+      <%= form.rich_text_area :content, class: "block w-full outline-none focus:ring-0 trix-content" %>
+    </div>
   </div>
   <div class="inline">
     <%= form.submit "#{t('posts.create_post')}", class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>

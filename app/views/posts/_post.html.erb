@@ -3,10 +3,10 @@
   <div class="flex items-center justify-between gap-2">
     <div class="flex flex-row justify-center items-center gap-2">
       <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
-        <% if post.user.avatar.nil? %>
-          <%= post.user.email[0].upcase %>
-        <% else %>
+        <% if post.user.avatar.attached? %>
           <%= image_tag post.user.avatar, class: "w-8 h-8 rounded-full" %>
+        <% else %>
+          <%= post.user.email[0].upcase %>
         <% end %>
       </div>
       <span class="text-sm font-semibold text-gray-800">

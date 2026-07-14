@@ -8,9 +8,9 @@ class CommentsController < ApplicationController
     @comment.user = current_user if user_signed_in?
 
     if @comment.save
-      redirect_to @post, notice: "Komentarz został utworzony"
+      redirect_to post_path(@post), notice: "Komentarz został utworzony"
     else
-      redirect_to @post, alert: "Błąd dodawania komentarza"
+      redirect_to post_path(@post), alert: "Błąd dodawania komentarza"
     end
   end
 

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   get "notifications/index"
-  resources :groups
+  resources :groups do
+    member do
+      post :join
+      delete :left
+    end
+  end
   get "messages/create"
   get "chatrooms/index"
   get "chatrooms/show"

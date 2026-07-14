@@ -5,13 +5,17 @@
     <div>
       <%= link_to "#{t('groups.back_to_groups')}", groups_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
     </div>
-    <%# Panel właściela grupy / przycisk dołączenia do grupy %>
+    <%# Panel właściciela grupy / przycisk dołączenia do grupy %>
     <div>
-      <% if @group.owner == current_user %>
-        <%= link_to "#{t('groups.edit_group')}", edit_group_path(@group), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-200 hover:bg-gray-300 inline-block font-medium" %>
-        <%= button_to "#{t('groups.delete_group')}", @group, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Czy napewno chcesz usunać grupę?" } %>
-      <% elsif !current_user.nil? || !current_user.groups.contain(@group) %>
-        <%= link_to "Dołącz do grupy", edit_group_path(@group), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-emerald-200 hover:bg-emerald-300 inline-block font-medium" %>
+      <% if current_user.present? %>
+        <% if @group.owner == current_user %>
+          <%= link_to "#{t('groups.edit_group')}", edit_group_path(@group), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-200 hover:bg-gray-300 inline-block font-medium" %>
+          <%= button_to "#{t('groups.delete_group')}", @group, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Czy napewno chcesz usunać grupę?" } %>
+        <% elsif !current_user.groups.include?(@group) %>
+          <%= button_to "Dołącz do grupy", join_group_path(@group), method: :post, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-emerald-200 hover:bg-emerald-300 inline-block font-medium cursor-pointer" %>
+        <% else %>
+          <%= button_to "Opuść grupę", left_group_path(@group), method: :delete, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-emerald-200 hover:bg-emerald-300 inline-block font-medium cursor-pointer" %>
+        <% end %>
       <% end %>
     </div>
   </div>

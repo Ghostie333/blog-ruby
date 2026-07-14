@@ -1,23 +1,21 @@
 class GroupsController < ApplicationController
-  before_action :set_group, only: %i[ show edit update destroy ]
-  before_action :authenticate_user!, only: %i[new create edit update destroy]
-  after_action :log_activity, only: %i[create update destroy]
+  before_action :set_group, only: %i[ show edit update destroy join left]
+  before_action :authenticate_user!, only: %i[new create edit update destroy join left]
+  after_action :log_activity, only: %i[create update destroy join left]
 
   # GET /groups or /groups.json
   def index
     if turbo_frame_request?
-      # Zapytanie przyszło z widgetu na stronie głównej -> ładujemy TYLKO grupy użytkownika
+      # Zapytanie przyszło z widgetu na stronie głównej to ładujemy tylko grupy użytkownika
       @groups = current_user.groups
     else
-      # Klasyczne wejście na stronę /groups -> ładujemy WSZYSTKIE grupy z bazy
+      # Wejście na stronę /groups to ładujemy wszystkie grupy
       @groups = Group.all
     end
   end
 
   # GET /groups/1 or /groups/1.json
   def show
-    @group = Group.find(params[:id])
-
     if @group.nil?
       redirect_back fallback_location: root_path, alert: "Grupa nie istnieje"
     end
@@ -44,7 +42,7 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if !@group.name.empty? && @group.save
-        redirect_to @group, notice: "Pomyślnie utworzono grupę"
+        format.html { redirect_to group_path(@group), notice: "Pomyślnie utworzono grupę", status: :see_other, allow_other_host: true }
       else
         render :new, alert: "Błąd tworzenia grupy"
       end
@@ -55,20 +53,46 @@ class GroupsController < ApplicationController
   def update
     respond_to do |format|
       if @group.update(group_params)
-        redirect_to @group, notice: "Group was successfully updated.", status: :see_other
+        format.html { redirect_to group_path(@group), notice: "Group was successfully updated.", status: :see_other }
       else
         render :edit, status: :unprocessable_content
       end
     end
   end
 
-  # DELETE /groups/1 or /groups/1.json
+
   def destroy
     @group.destroy!
 
     respond_to do |format|
-      redirect_to groups_path, notice: "Group was successfully deleted.", status: :see_other
+      format.html { redirect_to groups_path, notice: "Group was successfully deleted.", status: :see_other }
     end
+  end
+
+  # Funkcja do dołączenia do grupy
+  def join
+    # Sprawdzamy, czy użytkownik już tam nie należy
+    unless @group.users.include?(current_user)
+      @group.users << current_user
+      flash[:notice] = "Dołączyłeś do grupy!"
+    else
+      flash[:alert] = "Już jesteś członkiem tej grupy."
+    end
+
+    redirect_to group_path(@group), notice: "Group was successfully updated.", status: :see_other
+  end
+
+  # Funkcja do wyjścia z grupy
+  def left
+    # Sprawdzamy, czy użytkownik już tam nie należy
+    if @group.users.include?(current_user)
+      @group.users.delete(current_user)
+      flash[:notice] = "Opuściłeś grupę"
+    else
+      flash[:alert] = "Nie jesteś członkiem tej grupy."
+    end
+
+    redirect_to groups_path, notice: "Pomyślnie opuszczono grupę", status: :see_other
   end
 
   private

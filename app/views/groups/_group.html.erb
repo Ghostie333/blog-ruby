@@ -2,15 +2,16 @@
   <div class="flex items-center gap-2">
     <div class="w-12 aspect-square rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-sm">
       <% if group.group_picture.attached? %>
-        <%= image_tag group.group_picture, class: "w-12 aspect-square rounded-full" %>
+        <%= image_tag group.group_picture, class: "w-12 aspect-square rounded-full object-cover" %>
       <% else %>
         <%= group.name[0].upcase %>
       <% end %>
     </div>
-    <span class="font-semibold text-gray-800 text-sm p-1"><%= group.name %></span>
+    <span class="font-semibold text-gray-800 text-sm p-1 block truncate max-w-full" title="<%= group.name %>"><%= group.name %></span>
   </div>
   <div>
-    <%= button_to "#{t('groups.show_group')}", group, method: :get,
-                  class: "px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors duration-150" %>
+    <%# Zmieniono button_to na link_to oraz dodano inline-block, żeby styl przycisku nie uległ zmianie %>
+    <%= link_to t('groups.show_group'), group_path(group), data: { turbo: false },
+                class: "inline-block px-4 py-3 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition-colors duration-150 text-center" %>
   </div>
 </div>
